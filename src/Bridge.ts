@@ -1,11 +1,9 @@
-import {Topic} from './Emiter'
+import { Topic } from './Topic'
 import { ComponentMetaConfig } from './meta/ComponentMeta'
-import Node from './Node'
+import { Node } from './Node'
 
 export class Bridge {
-
   node : Node 
-
   constructor(node : Node){
     this.node = node
   }

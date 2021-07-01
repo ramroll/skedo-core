@@ -37,10 +37,19 @@ export interface ComponentMetaConfig {
   initialWidth : number,
   initialHeight : number,
   editor : PropsEditorConfigure,
+  description : string,
   intrinsic? :  boolean,
-  url? : string,
   style? : any,
-  defaultProps : any
+  author : string,
+  defaultProps : any,
+  group : string,
+
+  /* External components' */
+  file : string, // js file location
+  url? : string,
+  yml : string, 
+  imageUrl : string,
+  version : string
 }
 
 
@@ -56,6 +65,7 @@ export class ComponentMeta {
   url? : string
   style? : any
   defaultProps : any
+  imageUrl : string
 
   props : {[name : string] : PropMeta}
   groups : Array<GroupMeta>
@@ -71,6 +81,7 @@ export class ComponentMeta {
     this.url = config.url
     this.style = config.style
     this.defaultProps = config.defaultProps
+    this.imageUrl = config.imageUrl
     this.editor = config.editor
     this.props = {}
     this.groups = []
