@@ -2,7 +2,7 @@
 import {GroupMeta} from './GroupMeta'
 import {PropMeta} from './PropMeta'
 import {Map as ImmutableMap, fromJS} from 'immutable'
-import {Rect} from '../Rect'
+import { BoxDescriptor } from '../BoxDescriptor'
 
 
 export interface PropConfig {
@@ -45,6 +45,7 @@ export interface ComponentMetaConfig {
   group : string,
 
   /* External components' */
+  componentType? : 'react' | 'vue', 
   file : string, // js file location
   url? : string,
   yml : string, 
@@ -66,7 +67,7 @@ export class ComponentMeta {
   style? : any
   defaultProps : any
   imageUrl : string
-
+  componentType : 'react' | "vue"
   props : {[name : string] : PropMeta}
   groups : Array<GroupMeta>
 
@@ -82,6 +83,7 @@ export class ComponentMeta {
     this.style = config.style
     this.defaultProps = config.defaultProps
     this.imageUrl = config.imageUrl
+    this.componentType = config.componentType || 'react'
     this.editor = config.editor
     this.props = {}
     this.groups = []
@@ -96,11 +98,10 @@ export class ComponentMeta {
     }
   }
 
-  createData(id : number, rect : Rect) {
+  createData(id : number, box : BoxDescriptor) {
     let data = ImmutableMap({
       parent : null,
       type : this.type,
-      rect : rect,
       style : ImmutableMap<string, any>(),
       children : [],
       id,
@@ -109,6 +110,7 @@ export class ComponentMeta {
       editMode : false,
       passProps : fromJS(this.defaultProps || {}),
       isContainer : this.isContainer,
+      box : ImmutableMap(box)
     })
 
     for(let key in this.props) {

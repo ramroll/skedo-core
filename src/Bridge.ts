@@ -1,6 +1,6 @@
 import { Topic } from './Topic'
-import { ComponentMetaConfig } from './meta/ComponentMeta'
 import { Node } from './Node'
+import { JsonWidgetTree } from './JsonWidgetTree'
 
 export class Bridge {
   node : Node 
@@ -24,7 +24,13 @@ export class Bridge {
     this.node.emit(Topic.Updated)
   }
 
-  renderNode(json : ComponentMetaConfig) {
-
+  createChildBridge(json : JsonWidgetTree) : Bridge {
+    const node = this.node.addFromJSON(json)
+    return new Bridge(node)
   }
+
+  renderExternal(elem : HTMLElement) {
+    this.node.renderExternal(elem)
+  }
+
 }
